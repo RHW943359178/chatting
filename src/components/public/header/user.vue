@@ -1,0 +1,16 @@
+<template>
+  <div class="m-user">
+    <el-button size="medium">立即登录</el-button>
+    <el-button size="medium" class="m-button-color">免费注册</el-button>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>

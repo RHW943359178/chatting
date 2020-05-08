@@ -1,0 +1,11 @@
+.m-user{
+  .el-button{
+    border: none;
+    color: #009a61;
+  }
+
+  >.el-button:nth-child(2){
+    background-color: #009a61;
+    color: #FFFFFF;
+  }
+}
