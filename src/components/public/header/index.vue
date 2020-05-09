@@ -3,7 +3,9 @@
     <el-row>
       <el-col :span="3">
         <div class="m-logo">
-          chatting
+          <div class="m-logo-img">
+            <img :src="imgSrc" alt="">
+          </div>
         </div>
       </el-col>
       <el-col :span="15" class="m-geo-search">
@@ -30,6 +32,11 @@ export default {
     Geo,
     Search,
     User
+  },
+  data () {
+    return {
+      imgSrc: require('../../../../static/imgs/chat_logo.jpg')
+    }
   }
 }
 </script>
