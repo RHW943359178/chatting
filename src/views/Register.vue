@@ -1,36 +1,38 @@
 <template>
-  <div class="m-register">
+  <div class="m-sign">
     <Background></Background>
-    <div class="m-register-box">
-      <Header :type="signType" />
-      <el-row class="m-register-body">
-        <el-form>
-          <el-form-item>
-            <el-input v-model="userInfo.name" placeholder="你的名称" style="width: 300px" prefix-icon="el-icon-user-solid" clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="userInfo.name" placeholder="手机号" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="userInfo.name" placeholder="设置密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="userInfo.name" placeholder="确认密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <div>
-        <el-button type="success" round>注册</el-button>
+    <div class="m-container">
+      <div class="m-sign-box">
+        <Header :type="signType" />
+        <el-row class="m-sign-body">
+          <el-form>
+            <el-form-item>
+              <el-input v-model="userInfo.name" placeholder="你的名称" style="width: 300px" prefix-icon="el-icon-user-solid" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="userInfo.phone" placeholder="手机号或邮箱" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="userInfo.pwd" placeholder="设置密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="userInfo.cpwd" placeholder="确认密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <div>
+          <el-button type="success" round>注册</el-button>
+        </div>
+        <div class="m-register-txt">
+          <p>
+            点击 “注册” 即表示您同意并愿意遵守简书
+          </p>
+          <p>
+            <a href="#">用户协议 </a>和<a href="#"> 隐私政策</a>。
+          </p>
+        </div>
+        <Footer/>
       </div>
-      <div class="m-register-txt">
-        <p>
-          点击 “注册” 即表示您同意并愿意遵守简书
-        </p>
-        <p>
-          <a href="#">用户协议 </a>和<a href="#"> 隐私政策</a>。
-        </p>
-      </div>
-      <Footer/>
     </div>
   </div>
 </template>
@@ -59,8 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../assets/css/public/sign.scss';
   @import '../assets/css/public/sign-footer.scss';
   @import '../assets/css/public/sign-header.scss';
-  @import '../assets/css/register.scss';
+  @import '../assets/css/sign.scss';
 </style>

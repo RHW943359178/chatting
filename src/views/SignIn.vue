@@ -1,26 +1,30 @@
 <template>
-  <div class="m-signin">
+  <div class="m-sign">
     <Background></Background>
-    <div class="m-register-box">
-      <Header :type="signType" />
-      <el-row class="m-register-body">
-        <el-form>
-          <el-form-item>
-            <el-input v-model="userInfo.mailPhone" placeholder="手机号或邮箱" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="userInfo.password" placeholder="密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-checkbox v-model="rememberMe">记住我</el-checkbox>
-            <a href="/findPassword">忘记密码？</a>
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <div>
-        <el-button type="success" round>注册</el-button>
+    <div class="m-container">
+      <div class="m-sign-box">
+        <Header :type="signType" />
+        <el-row class="m-sign-body">
+          <el-form>
+            <el-form-item>
+              <el-input v-model="userInfo.mailPhone" placeholder="手机号或邮箱" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input v-model="userInfo.password" placeholder="密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
+              <div class="m-sign-remember">
+                <el-checkbox v-model="rememberMe">记住我</el-checkbox>
+                <a href="/findPassword">忘记密码？</a>
+              </div>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <div>
+          <el-button type="success" round>登录</el-button>
+        </div>
+        <Footer/>
       </div>
-      <Footer/>
     </div>
   </div>
 </template>
@@ -50,8 +54,7 @@ export default {
 </script>
 
 <style>
-  @import '../assets/css/public/sign.scss';
   @import '../assets/css/public/sign-footer.scss';
   @import '../assets/css/public/sign-header.scss';
-  @import '../assets/css/register.scss';
+  @import '../assets/css/sign.scss';
 </style>

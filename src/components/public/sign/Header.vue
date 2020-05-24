@@ -1,9 +1,9 @@
 <template>
   <div class="m-sign-header">
     <h4>
-      <a href="/signin" :class="type == 2 ? 'm-sign-active' : ''">登录</a>
+      <router-link to="signin" :class="[type == 2 ? 'm-sign-active' : '', 'router_link']">登录</router-link>
       <b>·</b>
-      <a href="/register" :class="type == 1 ? 'm-sign-active' : ''">注册</a>
+      <router-link to="register" :class="[type == 1 ? 'm-sign-active' : '', 'router_link']">注册</router-link>
     </h4>
   </div>
 </template>

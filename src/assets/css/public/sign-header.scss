@@ -1,10 +1,12 @@
 .m-sign-header{
   text-align: center;
-  a,b{
+  margin-bottom: 50px;
+  .router_link, b{
     padding: 10px;
     color: #969696;
     text-decoration: none;
     font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;;
+    font-size: 18px;
   }
   .m-sign-active{
     color: #009a61;

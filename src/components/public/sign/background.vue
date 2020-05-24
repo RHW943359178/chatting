@@ -1,5 +1,5 @@
 <template>
-  <div class="m-sign-in-up">
+  <div>
     <div class="m-sign-logo" @click="logoClick">
       <span class="m-sign-logo-left">E</span>
       <span class="m-sign-logo-rignt">chat</span>
