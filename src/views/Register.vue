@@ -7,7 +7,9 @@
         <el-row class="m-sign-body">
           <el-form>
             <el-form-item>
-              <el-input v-model="userInfo.name" placeholder="你的名称" style="width: 300px" prefix-icon="el-icon-user-solid" clearable></el-input>
+              <el-tooltip class="m-sign-tooltip" effect="light" content="是的没错" placement="right">
+                <el-input v-model="userInfo.name" placeholder="你的名称" style="width: 300px" prefix-icon="el-icon-user-solid" clearable></el-input>
+              </el-tooltip>
             </el-form-item>
             <el-form-item>
               <el-input v-model="userInfo.phone" placeholder="手机号或邮箱" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
