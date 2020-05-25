@@ -21,7 +21,7 @@
           </el-form>
         </el-row>
         <div>
-          <el-button type="success" round>登录</el-button>
+          <el-button class="sign-button" type="success" round>登录</el-button>
         </div>
         <Footer/>
       </div>

@@ -33,6 +33,15 @@
         .el-form-item{
           margin: 0;
         }
+        .el-input-group__append{
+          padding: 0 10px;
+        }
+        .el-input{
+          width: 300px;
+        }
+        .el-form-item__error{
+          display: none;
+        }
         input{
           background-color: #f1f1f1;
           height: 50px;
@@ -67,7 +76,7 @@
           }
         }
       } 
-      .el-button{
+      .sign-button{
         width: 300px;
         margin-top: 20px;
       }
