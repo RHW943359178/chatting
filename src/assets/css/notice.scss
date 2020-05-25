@@ -1,0 +1,32 @@
+.notice{
+  position: absolute; 
+  background: #fff; 
+  border-radius: 4px; 
+  left: 320px; 
+  border: 1px solid #ea6f5a; 
+  z-index: 999; top: 6px;
+  white-space:nowrap; 
+  padding: 10px; 
+  line-height: 16px; 
+  .notice-big{
+    position: absolute;
+    left:-10px;
+    top:14px;
+    width: 0;
+    height: 0;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #ea6f5a transparent transparent
+  }
+  .notice-small{
+    position: absolute;
+    left:-7.5px;
+    top:15px;
+    width: 0;
+    height: 0;
+    border-width: 4px 4px 4px 4px;
+    border-style: solid;
+    z-index: 999;
+    border-color: transparent #fff transparent transparent
+  }
+}
