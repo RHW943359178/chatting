@@ -1,6 +1,6 @@
 <template>
   <div class="notice">
-    谁水水水水水水水水水水水水水水水水水水水
+    {{ message }}
     <div class="notice-big"></div>
     <div class="notice-small"></div>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-
+  props: ['message']
 }
 </script>
 
