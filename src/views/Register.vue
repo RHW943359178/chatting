@@ -10,24 +10,34 @@
               <el-input v-model="userInfo.username" @focus="handleFocus('username')"  placeholder="你的名称" prefix-icon="el-icon-user-solid" clearable></el-input>
               <NoticeBox v-if="validate.username.valid" :message="validate.username.message" />
             </el-form-item>
-            <el-form-item prop="phone" v-if="register.type === 1">
+            <!-- <el-form-item prop="phone" v-if="register.type === 1">
               <el-input v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(1)">{{ register.label }}</el-button>
               </el-input>
               <NoticeBox v-if="validate.phone.valid" :message="validate.phone.message" />
             </el-form-item>
-            <el-form-item prop="mail"  v-if="register.type === 2">
+            <el-form-item prop="mail" v-if="register.type === 2">
               <el-input v-model="userInfo.mail" placeholder="邮箱" prefix-icon="el-icon-message" clearable>
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(2)">{{ register.label }}</el-button>
               </el-input>
               <NoticeBox v-if="validate.mail.valid" :message="validate.mail.message" />
+            </el-form-item> -->
+            <el-form-item :prop="typeChange.prop">
+              <el-input v-if="register.type === 1" @focus="handleFocus('phone')" v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
+                <el-button slot="append" :class="register.class" @click="phoneMialChange(1)">{{ register.label }}</el-button>
+              </el-input>
+              <el-input v-if="register.type === 2" @focus="handleFocus('email')" v-model="userInfo.mail" placeholder="邮箱" prefix-icon="el-icon-message" clearable>
+                <el-button slot="append" :class="register.class" @click="phoneMialChange(2)">{{ register.label }}</el-button>
+              </el-input>
+              <NoticeBox v-if="typeChange.valid" :message="typeChange.message" />
+              <!-- <NoticeBox v-if="validate.email.valid" :message="validate.email.message" /> -->
             </el-form-item>
             <el-form-item prop="pwd">
-              <el-input v-model="userInfo.pwd" placeholder="设置密码" prefix-icon="el-icon-lock" clearable></el-input>
+              <el-input v-model="userInfo.pwd" @focus="handleFocus('pwd')" placeholder="设置密码" prefix-icon="el-icon-lock" clearable></el-input>
               <NoticeBox v-if="validate.pwd.valid" :message="validate.pwd.message" />
             </el-form-item>
             <el-form-item prop="cpwd">
-              <el-input v-model="userInfo.cpwd" placeholder="确认密码" prefix-icon="el-icon-lock" clearable></el-input>
+              <el-input v-model="userInfo.cpwd" @focus="handleFocus('cpwd')" placeholder="确认密码" prefix-icon="el-icon-lock" clearable></el-input>
               <NoticeBox v-if="validate.cpwd.valid" :message="validate.cpwd.message" />
             </el-form-item>
           </el-form>
@@ -37,7 +47,7 @@
         </div>
         <div class="m-register-txt">
           <p>
-            点击 “注册” 即表示您同意并愿意遵守简书
+            点击 “注册” 即表示您同意并愿意遵守畅聊
           </p>
           <p>
             <a href="#">用户协议 </a>和<a href="#"> 隐私政策</a>。
@@ -67,11 +77,18 @@ export default {
       userInfo: {
         name: ''
       },
+      showOff: false,
+      message: '',
       signType: 1, //  判断是注册还是登陆，注册是1，登陆是2
       register: { //  注册时使用邮箱或者手机号码 1 是手机号类；2是邮箱类
         type: 1,
         label: '邮箱',
         class: 'el-icon-message'
+      },
+      typeChange: { //  用于控制手机号与邮箱触发校验框控制
+        prop: 'phone',
+        valid: false,
+        message: ''
       },
       validate: {
         username: {
@@ -136,26 +153,34 @@ export default {
           label: '手机号',
           class: 'el-icon-mobile-phone'
         }
+        this.typeChange = {
+          prop: 'email',
+          valid: this.validate.email.valid
+        }
       } else {
         this.register = {
           type: 1,
           label: '邮箱',
           class: 'el-icon-message'
         }
+        this.typeChange = {
+          prop: 'phone',
+          valid: this.validate.phone.valid
+        }
       }
-      console.log(this.validate, 1212)
     },
     //  input框获取焦点之后取消验证
     handleFocus (val) {
-      console.log(val)
       this.$refs.ruleForm.clearValidate(val)
       this.validate[val].valid = false
+      if (val === 'phone' || val === 'email') {
+        this.typeChange.valid = false
+      }
     },
     //  注册验证
     handleRegister () {
       // const validList = this.register.type === 1 ? ['username', 'phone', 'pwd', 'cpwd'] : ['username', 'email', 'pwd', 'cpwd']
       this.$refs.ruleForm.validate(valid => {
-        console.log(valid, 1122)
         if (valid) {
           console.log(2211)
         } else {
@@ -169,6 +194,26 @@ export default {
           //     }
           //   })
           // })
+          if (this.register.type === 1) {
+            this.$refs.ruleForm.validateField('phone', valid => {
+              if (valid) {
+                this.typeChange.valid = true
+                this.typeChange.message = valid
+              } else {
+                this.typeChange.valid = false
+              }
+            })
+          } else {
+            this.$refs.ruleForm.validateField('email', valid => {
+              console.log(valid, 321)
+              if (valid) {
+                this.typeChange.valid = true
+                this.typeChange.message = valid
+              } else {
+                this.typeChange.valid = false
+              }
+            })
+          }
           this.$refs.ruleForm.validateField('username', valid => {
             if (valid) {
               this.validate.username.valid = true
@@ -177,23 +222,7 @@ export default {
               this.validate.username.valid = false
             }
           })
-          this.$refs.ruleForm.validateField('email', valid => {
-            if (valid) {
-              this.validate.email.valid = true
-              this.validate.email.message = valid
-            } else {
-              this.validate.email.valid = false
-            }
-          })
-          this.$refs.ruleForm.validateField('phone', valid => {
-            console.log(valid)
-            if (valid) {
-              this.validate.phone.valid = true
-              this.validate.phone.message = valid
-            } else {
-              this.validate.phone.valid = false
-            }
-          })
+
           this.$refs.ruleForm.validateField('pwd', valid => {
             if (valid) {
               this.validate.pwd.valid = true
