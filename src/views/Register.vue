@@ -132,9 +132,9 @@ export default {
           {
             validator: (rule, value, callback) => {
               if (value === '') {
-                callback(new Error('请再次输入密码'))
+                callback(new Error('请再次输入密码').message)
               } else if (value !== this.userInfo.pwd) {
-                callback(new Error('两次输入密码不一致'))
+                callback(new Error('两次输入密码不一致').message)
               } else {
                 callback()
               }
@@ -157,6 +157,7 @@ export default {
           prop: 'email',
           valid: this.validate.email.valid
         }
+        this.$refs.ruleForm.clearValidate('phone')
       } else {
         this.register = {
           type: 1,
@@ -167,6 +168,7 @@ export default {
           prop: 'phone',
           valid: this.validate.phone.valid
         }
+        this.$refs.ruleForm.clearValidate('email')
       }
     },
     //  input框获取焦点之后取消验证
@@ -179,68 +181,30 @@ export default {
     },
     //  注册验证
     handleRegister () {
-      // const validList = this.register.type === 1 ? ['username', 'phone', 'pwd', 'cpwd'] : ['username', 'email', 'pwd', 'cpwd']
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate((valid, object) => {
         if (valid) {
           console.log(2211)
         } else {
-          // validList.forEach(item => {
-          //   this.$refs.ruleForm.validateField(item, valid => {
-          //     if (valid) {
-          //       this.validate.item.valid = true
-          //       this.validate.item.message = valid
-          //     } else {
-          //       this.validate.item.valid = false
-          //     }
-          //   })
-          // })
-          if (this.register.type === 1) {
-            this.$refs.ruleForm.validateField('phone', valid => {
-              if (valid) {
-                this.typeChange.valid = true
-                this.typeChange.message = valid
-              } else {
-                this.typeChange.valid = false
-              }
-            })
-          } else {
-            this.$refs.ruleForm.validateField('email', valid => {
-              console.log(valid, 321)
-              if (valid) {
-                this.typeChange.valid = true
-                this.typeChange.message = valid
-              } else {
-                this.typeChange.valid = false
-              }
-            })
-          }
-          this.$refs.ruleForm.validateField('username', valid => {
-            if (valid) {
-              this.validate.username.valid = true
-              this.validate.username.message = valid
+          const validList = this.handleValidObject(object)
+          validList.forEach(item => {
+            if (item.field === 'phone' || item.field === 'email') {
+              this.typeChange.valid = true
+              this.typeChange.message = item.message
             } else {
-              this.validate.username.valid = false
-            }
-          })
-
-          this.$refs.ruleForm.validateField('pwd', valid => {
-            if (valid) {
-              this.validate.pwd.valid = true
-              this.validate.pwd.message = valid
-            } else {
-              this.validate.pwd.valid = false
-            }
-          })
-          this.$refs.ruleForm.validateField('cpwd', valid => {
-            if (valid) {
-              this.validate.cpwd.valid = true
-              this.validate.cpwd.message = valid
-            } else {
-              this.validate.cpwd.valid = false
+              this.validate[item.field].valid = true
+              this.validate[item.field].message = item.message
             }
           })
         }
       })
+    },
+    //  处理element-ui校验返回的object
+    handleValidObject (object) {
+      const arr = []
+      Object.getOwnPropertyNames(object).forEach(key => {
+        arr.push({ field: key, message: object[key][0].message })
+      })
+      return arr
     }
   }
 }
