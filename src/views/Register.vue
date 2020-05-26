@@ -6,9 +6,9 @@
         <Header :type="signType" />
         <el-row class="m-sign-body">
           <el-form :model="userInfo" ref="ruleForm" :rules="rules">
-            <el-form-item prop="username" style="">
-              <el-input v-model="userInfo.username" placeholder="你的名称" prefix-icon="el-icon-user-solid" clearable></el-input>
-              <NoticeBox v-if="validate.userName.valid" :message="validate.userName.message" />
+            <el-form-item prop="username">
+              <el-input v-model="userInfo.username" @focus="handleFocus('username')"  placeholder="你的名称" prefix-icon="el-icon-user-solid" clearable></el-input>
+              <NoticeBox v-if="validate.username.valid" :message="validate.username.message" />
             </el-form-item>
             <el-form-item prop="phone" v-if="register.type === 1">
               <el-input v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
@@ -74,7 +74,7 @@ export default {
         class: 'el-icon-message'
       },
       validate: {
-        userName: {
+        username: {
           valid: false,
           message: ''
         },
@@ -143,19 +143,38 @@ export default {
           class: 'el-icon-message'
         }
       }
+      console.log(this.validate, 1212)
+    },
+    //  input框获取焦点之后取消验证
+    handleFocus (val) {
+      console.log(val)
+      this.$refs.ruleForm.clearValidate(val)
+      this.validate[val].valid = false
     },
     //  注册验证
     handleRegister () {
+      // const validList = this.register.type === 1 ? ['username', 'phone', 'pwd', 'cpwd'] : ['username', 'email', 'pwd', 'cpwd']
       this.$refs.ruleForm.validate(valid => {
+        console.log(valid, 1122)
         if (valid) {
           console.log(2211)
         } else {
+          // validList.forEach(item => {
+          //   this.$refs.ruleForm.validateField(item, valid => {
+          //     if (valid) {
+          //       this.validate.item.valid = true
+          //       this.validate.item.message = valid
+          //     } else {
+          //       this.validate.item.valid = false
+          //     }
+          //   })
+          // })
           this.$refs.ruleForm.validateField('username', valid => {
             if (valid) {
-              this.validate.userName.valid = true
-              this.validate.userName.message = valid
+              this.validate.username.valid = true
+              this.validate.username.message = valid
             } else {
-              this.validate.userName.valid = false
+              this.validate.username.valid = false
             }
           })
           this.$refs.ruleForm.validateField('email', valid => {
