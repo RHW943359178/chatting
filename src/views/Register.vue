@@ -10,18 +10,6 @@
               <el-input v-model="userInfo.username" @focus="handleFocus('username')"  placeholder="你的名称" prefix-icon="el-icon-user-solid" clearable></el-input>
               <NoticeBox v-if="validate.username.valid" :message="validate.username.message" />
             </el-form-item>
-            <!-- <el-form-item prop="phone" v-if="register.type === 1">
-              <el-input v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
-                <el-button slot="append" :class="register.class" @click="phoneMialChange(1)">{{ register.label }}</el-button>
-              </el-input>
-              <NoticeBox v-if="validate.phone.valid" :message="validate.phone.message" />
-            </el-form-item>
-            <el-form-item prop="mail" v-if="register.type === 2">
-              <el-input v-model="userInfo.mail" placeholder="邮箱" prefix-icon="el-icon-message" clearable>
-                <el-button slot="append" :class="register.class" @click="phoneMialChange(2)">{{ register.label }}</el-button>
-              </el-input>
-              <NoticeBox v-if="validate.mail.valid" :message="validate.mail.message" />
-            </el-form-item> -->
             <el-form-item :prop="typeChange.prop">
               <el-input v-if="register.type === 1" @focus="handleFocus('phone')" v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(1)">{{ register.label }}</el-button>
@@ -30,7 +18,10 @@
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(2)">{{ register.label }}</el-button>
               </el-input>
               <NoticeBox v-if="typeChange.valid" :message="typeChange.message" />
-              <!-- <NoticeBox v-if="validate.email.valid" :message="validate.email.message" /> -->
+            </el-form-item>
+            <el-form-item prop="check">
+              <el-input v-model="userInfo.check" @focus="handleFocus('check')" placeholder="验证码" prefix-icon="el-icon-s-claim" clearable></el-input>
+              <NoticeBox v-if="validate.check.valid" :message="validate.check.message" />
             </el-form-item>
             <el-form-item prop="pwd">
               <el-input v-model="userInfo.pwd" @focus="handleFocus('pwd')" placeholder="设置密码" prefix-icon="el-icon-lock" clearable></el-input>
@@ -103,6 +94,10 @@ export default {
           valid: false,
           message: ''
         },
+        check: {
+          valid: false,
+          message: ''
+        },
         pwd: {
           valid: false,
           message: ''
@@ -117,12 +112,16 @@ export default {
           { required: true, type: 'string', message: '请输入名称', trigger: 'submit' }
         ],
         email: [
-          { required: true, type: 'string', message: '请输入邮箱', trigger: 'submit' },
-          { required: true, type: 'email', message: '邮箱格式不正确', trigger: 'submit' }
+          { required: true, message: '请输入邮箱', trigger: 'submit' },
+          { type: 'email', message: '邮箱格式不正确', trigger: 'submit' }
+          // { required: true, pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/, message: '邮箱格式不正确', trigger: 'submit' }
         ],
         phone: [
           { required: true, type: 'number', message: '请输入手机号', trigger: 'submit' },
-          { required: true, pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '手机号码格式不正确', trigger: 'submit' }
+          { pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '手机号码格式不正确', trigger: 'submit' }
+        ],
+        check: [
+          { required: true, type: 'string', message: '请输入验证码', trigger: 'submit' }
         ],
         pwd: [
           { required: true, type: 'string', message: '请输入密码', trigger: 'submit' }
@@ -194,6 +193,7 @@ export default {
               this.validate[item.field].valid = true
               this.validate[item.field].message = item.message
             }
+            return
           })
         }
       })

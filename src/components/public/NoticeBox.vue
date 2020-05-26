@@ -1,5 +1,6 @@
 <template>
   <div class="notice">
+    <i class="el-icon-warning-outline"></i>
     {{ message }}
     <div class="notice-big"></div>
     <div class="notice-small"></div>
