@@ -19,8 +19,9 @@
               </el-input>
               <NoticeBox v-if="typeChange.valid" :message="typeChange.message" />
             </el-form-item>
-            <el-form-item prop="check">
+            <el-form-item prop="check" v-if="userInfo.phone || userInfo.email">
               <el-input v-model="userInfo.check" @focus="handleFocus('check')" placeholder="验证码" prefix-icon="el-icon-s-claim" clearable></el-input>
+              <el-button style="position: absolute; top: 9px; right: 9px; " :disabled="checkValid()" type="success" size="small" round @click="phoneMialChange(2)">发送验证码</el-button>
               <NoticeBox v-if="validate.check.valid" :message="validate.check.message" />
             </el-form-item>
             <el-form-item prop="pwd">
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import util from '../utils/regular'
 import Background from '../components/public/sign/background.vue'
 import Footer from '../components/public/sign/footer.vue'
 import Header from '../components/public/sign/Header.vue'
@@ -118,7 +120,7 @@ export default {
         ],
         phone: [
           { required: true, type: 'number', message: '请输入手机号', trigger: 'submit' },
-          { pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '手机号码格式不正确', trigger: 'submit' }
+          { pattern: util.phone, message: '手机号码格式不正确', trigger: 'submit' }
         ],
         check: [
           { required: true, type: 'string', message: '请输入验证码', trigger: 'submit' }
@@ -143,6 +145,9 @@ export default {
       }
     }
   },
+  mounted () {
+    // console.log(util.phone, 'util.phone')
+  },
   methods: {
     //  注册列表邮箱、密码切换
     phoneMialChange (val) {
@@ -157,6 +162,7 @@ export default {
           valid: this.validate.email.valid
         }
         this.$refs.ruleForm.clearValidate('phone')
+        this.userInfo.phone = ''
       } else {
         this.register = {
           type: 1,
@@ -168,6 +174,7 @@ export default {
           valid: this.validate.phone.valid
         }
         this.$refs.ruleForm.clearValidate('email')
+        this.userInfo.email = ''
       }
     },
     //  input框获取焦点之后取消验证
@@ -185,7 +192,8 @@ export default {
           console.log(2211)
         } else {
           const validList = this.handleValidObject(object)
-          validList.forEach(item => {
+          for (let i = 0; i < validList.length; i++) {
+            const item = validList[i]
             if (item.field === 'phone' || item.field === 'email') {
               this.typeChange.valid = true
               this.typeChange.message = item.message
@@ -193,10 +201,18 @@ export default {
               this.validate[item.field].valid = true
               this.validate[item.field].message = item.message
             }
-            return
-          })
+            break
+          }
         }
       })
+    },
+    //  处理发送验证码按钮置灰功能，校验成功后可以点击
+    checkValid () {
+      if (this.register.type === 1) {
+        // if ()
+      } else {
+
+      }
     },
     //  处理element-ui校验返回的object
     handleValidObject (object) {
