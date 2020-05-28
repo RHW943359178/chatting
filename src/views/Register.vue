@@ -68,7 +68,13 @@ export default {
     return {
       imgSrc: require('../../static/imgs/chat_logo.jpg'),
       userInfo: {
-        name: ''
+        username: '',
+        phone: '',
+        email: '',
+        registerWay: '',
+        check: '',
+        pwd: '',
+        cpwd: ''
       },
       showOff: false,
       message: '',
