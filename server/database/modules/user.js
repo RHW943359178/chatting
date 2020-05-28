@@ -126,5 +126,6 @@ userSchema.methods = {
   }
 }
 
+mongoose.model('User', userSchema)
 
 
