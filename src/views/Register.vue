@@ -14,7 +14,7 @@
               <el-input v-if="register.type === 1" @focus="handleFocus('phone')" v-model.number="userInfo.phone" placeholder="手机号" prefix-icon="el-icon-mobile-phone" clearable>
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(1)">{{ register.label }}</el-button>
               </el-input>
-              <el-input v-if="register.type === 2" @focus="handleFocus('email')" v-model="userInfo.mail" placeholder="邮箱" prefix-icon="el-icon-message" clearable>
+              <el-input v-if="register.type === 2" @focus="handleFocus('email')" v-model="userInfo.email" placeholder="邮箱" prefix-icon="el-icon-message" clearable>
                 <el-button slot="append" :class="register.class" @click="phoneMialChange(2)">{{ register.label }}</el-button>
               </el-input>
               <NoticeBox v-if="typeChange.valid" :message="typeChange.message" />
