@@ -230,7 +230,11 @@ export default {
       if (this.register.type === 1) {
         // if ()
       } else {
-
+        if (util.email.test(this.userInfo.email)) {
+          return false
+        } else {
+          return true
+        }
       }
     },
     //  处理element-ui校验返回的object
