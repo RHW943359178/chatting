@@ -195,7 +195,20 @@ export default {
     handleRegister () {
       this.$refs.ruleForm.validate((valid, object) => {
         if (valid) {
-          console.log(2211)
+          this.$axios.post('/api/user/register', {
+            username: 'rhw',
+            password: '123123'
+          }).then(({ status, data }) => {
+            if (status === 200) {
+              if (data.code === 200) {
+                this.$message.success(data.message)
+              } else {
+                this.$message.error(data.message)
+              }
+            } else {
+              this.$message.error('服务器出错')
+            }
+          })
         } else {
           const validList = this.handleValidObject(object)
           for (let i = 0; i < validList.length; i++) {
