@@ -29,7 +29,7 @@ export default {
     },
     get expire() {
       return () => {
-        return new Date().getTime() + 60*1000
+        return new Date().getTime() + 60*1000*5
       }
     }
   }

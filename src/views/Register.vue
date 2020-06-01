@@ -1,6 +1,6 @@
 <template>
   <div class="m-sign">
-    <Background></Background>
+    <Background/>
     <div class="m-container">
       <div class="m-sign-box">
         <Header :type="signType" />
@@ -21,7 +21,7 @@
             </el-form-item>
             <el-form-item prop="check" v-if="userInfo.phone || userInfo.email">
               <el-input v-model="userInfo.check" @focus="handleFocus('check')" placeholder="验证码" prefix-icon="el-icon-s-claim" clearable></el-input>
-              <el-button style="position: absolute; top: 9px; right: 9px; " :disabled="checkValid()" type="success" size="small" round @click="phoneMialChange(2)">发送验证码</el-button>
+              <el-button style="position: absolute; top: 9px; right: 9px; " :disabled="checkValid() || buttonValid" type="success" size="small" round @click="sendMessage()">发送验证码</el-button>
               <NoticeBox v-if="validate.check.valid" :message="validate.check.message" />
             </el-form-item>
             <el-form-item prop="pwd">
@@ -79,6 +79,8 @@ export default {
       showOff: false,
       message: '',
       signType: 1, //  判断是注册还是登陆，注册是1，登陆是2
+      msgType: 1, //  注册登录页面信息提示，1 成功信息 2.警告信息 3.失败信息
+      buttonValid: false, //  验证码有效期内，不允许重复发送
       register: { //  注册时使用邮箱或者手机号码 1 是手机号类；2是邮箱类
         type: 1,
         label: '邮箱',
@@ -155,6 +157,21 @@ export default {
     // console.log(util.phone, 'util.phone')
   },
   methods: {
+    //  发送验证码
+    sendMessage () {
+      this.$axios.post('/api/user/verify', {
+        userInfo: this.userInfo.username,
+        email: this.userInfo.email
+      }).then(({ status, data }) => {
+        if (status === 200 && data) {
+          if (data.code === -1) {
+            this.validate.check.message = data.message
+          }
+        } else {
+          this.$message.error(data.message)
+        }
+      })
+    },
     //  注册列表邮箱、密码切换
     phoneMialChange (val) {
       if (val === 1) {

@@ -1,0 +1,23 @@
+$bg_color: #67C23A;
+.noticeTop{
+  div{
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+  position: absolute;
+  top: 0;
+  .success{
+    border: 1px solid $bg_color;
+    color: $bg_color;
+  }
+  .warning{
+    $bg_color: #E6A23C;
+    border: 1px solid $bg_color;
+    color: $bg_color;
+  }
+  .error{
+    $bg_color: #F56C6C;
+    border: 1px solid $bg_color;
+    color: $bg_color;
+  }
+}
