@@ -6,7 +6,7 @@ const instance = axios.create({
   baseUrl: `http://${process.env.HOST || 'localhost'} : ${process.env.PORT || 3000}`,
   timeout: 5000,
   headers: {
-
+    "Content-Type": "application/json;charset=UTF-8"
   }
 })
 
@@ -34,4 +34,6 @@ instance.interceptors.response.use(
     
   }
 )
+
+export default instance
 

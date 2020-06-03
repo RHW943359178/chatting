@@ -57,6 +57,7 @@ import Background from '../components/public/sign/background.vue'
 import Footer from '../components/public/sign/footer.vue'
 import Header from '../components/public/sign/Header.vue'
 import NoticeBox from '../components/public/NoticeBox.vue'
+import USER from '../../server/api/user'
 export default {
   components: {
     Background,
@@ -154,23 +155,28 @@ export default {
     }
   },
   mounted () {
-    // console.log(util.phone, 'util.phone')
   },
   methods: {
     //  发送验证码
     sendMessage () {
-      this.$axios.post('/api/user/verify', {
+      const params = {
         userInfo: this.userInfo.username,
         email: this.userInfo.email
-      }).then(({ status, data }) => {
-        if (status === 200 && data) {
-          if (data.code === -1) {
-            this.validate.check.message = data.message
-          }
-        } else {
-          this.$message.error(data.message)
-        }
+      }
+      USER.verify(params).then(res => {
+        console.log(res)
       })
+      // this.$axios.post('/api/user/verify', {
+
+      // }).then(({ status, data }) => {
+      //   if (status === 200 && data) {
+      //     if (data.code === -1) {
+      //       this.validate.check.message = data.message
+      //     }
+      //   } else {
+      //     this.$message.error(data.message)
+      //   }
+      // })
     },
     //  注册列表邮箱、密码切换
     phoneMialChange (val) {

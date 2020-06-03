@@ -8,7 +8,6 @@ let Store = new Redis().client
 let router = new Router({
   prefix: '/user'
 })
-
 /**
  * 邮箱认证
  */
@@ -18,6 +17,8 @@ router.post('/verify', async (ctx, next) => {
   console.log(ctx, 123)
 
   const saveExpire = await Store.hget(`nodeMail: ${username}`, 'expire')
+
+  console.log(saveExpire, 1122)
 
   //  限制频繁请求验证，5分钟一次
   if (saveExpire && new Date().getTime() - saveExpire < 0) {
