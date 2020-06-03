@@ -160,7 +160,7 @@ export default {
     //  发送验证码
     sendMessage () {
       const params = {
-        userInfo: this.userInfo.username,
+        username: this.userInfo.username,
         email: this.userInfo.email
       }
       USER.verify(params).then(res => {

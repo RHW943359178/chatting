@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import users from './routes/user'
+// import koaBody from 'koa-body'
 import bodyParser from 'koa-bodyparser'
 
 const app = new Koa()
