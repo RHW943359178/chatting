@@ -163,20 +163,19 @@ export default {
         username: this.userInfo.username,
         email: this.userInfo.email
       }
-      USER.verify(params).then(res => {
-        console.log(res)
+      USER.verify(params).then((status, result) => {
+        if (status === 200) {
+          if (result.code === 0) {
+            this.$notify({ message: result.message, type: 'success' })
+          } else if (result.code === -1) {
+            this.$notify({ message: result.message, type: 'warning' })
+          } else {
+            this.$notify({ message: '验证码发送失败', type: 'error' })
+          }
+        } else {
+          this.$notify({ message: '服务器出错', type: 'error' })
+        }
       })
-      // this.$axios.post('/api/user/verify', {
-
-      // }).then(({ status, data }) => {
-      //   if (status === 200 && data) {
-      //     if (data.code === -1) {
-      //       this.validate.check.message = data.message
-      //     }
-      //   } else {
-      //     this.$message.error(data.message)
-      //   }
-      // })
     },
     //  注册列表邮箱、密码切换
     phoneMialChange (val) {
@@ -218,20 +217,11 @@ export default {
     handleRegister () {
       this.$refs.ruleForm.validate((valid, object) => {
         if (valid) {
-          this.$axios.post('/api/user/register', {
-            username: 'rhw',
-            password: '123123'
-          }).then(({ status, data }) => {
-            if (status === 200) {
-              if (data.code === 200) {
-                this.$message.success(data.message)
-              } else {
-                this.$message.error(data.message)
-              }
-            } else {
-              this.$message.error('服务器出错')
-            }
-          })
+          let params = {
+            username: this.userInfo.username,
+            
+          }
+          USER.register()
         } else {
           const validList = this.handleValidObject(object)
           for (let i = 0; i < validList.length; i++) {

@@ -1,6 +1,9 @@
 import NodeMailer from 'nodemailer'
 import Email from '../database/config'
 import Redis from 'koa-redis'
+import User from '../database/modules/user'
+import axios from '../../src/utils/axios'
+import qs from 'qs'
 
 //  获取Redis客户端
 let Store = new Redis().client
@@ -19,8 +22,8 @@ export const sendEmail = async ctx => {
   let ko = {
     code: Email.smtp.code(),
     expire: Email.smtp.expire(),
-    email: ctx.body.email,
-    user: ctx.body.username
+    email: ctx.request.body.email,
+    user: ctx.request.body.username
   }
 
   //  邮箱内容
@@ -40,4 +43,34 @@ export const sendEmail = async ctx => {
       Store.hmset(`nodeMail: ${ko.user}`, 'code', ko.code, 'expire', ko.expire, 'email', ko.email)
     }
   })
+}
+
+/**
+ * 校验写库状态
+ * 判断 nUser 是否存在（判断存在之后，再使用 axios 请求登录接口用于验证，这一步的作用有待解读）
+ * @param {} ctx 
+ */
+export const examDatabase = async (ctx, nUser) => {
+  if (nUser) {
+    let result = await axios.post('/api/user/register', qs.stringify({
+      username,
+      password
+    }))
+    if (result.data && result.data.code === 0) {
+      ctx.body = {
+        code: 200,
+        message: '注册成功'
+      }
+    } else {
+      ctx.body = {
+        code: -1,
+        message: 'error'
+      }
+    }
+  } else {
+    ctx.body = {
+      code = -1,
+      message: '注册失败'
+    }
+  }
 }
