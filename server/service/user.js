@@ -59,7 +59,7 @@ export const examDatabase = async (ctx, nUser) => {
     if (result.data && result.data.code === 0) {
       ctx.body = {
         code: 200,
-        message: '注册成功'
+        message: '用户注册成功！'
       }
     } else {
       ctx.body = {
@@ -69,7 +69,7 @@ export const examDatabase = async (ctx, nUser) => {
     }
   } else {
     ctx.body = {
-      code = -1,
+      code: -1,
       message: '注册失败'
     }
   }

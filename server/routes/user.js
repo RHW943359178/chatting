@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import { sendEmail } from '../service/user'
+import { sendEmail, examDatabase } from '../service/user'
 import User from '../database/modules/user'
 import Redis from 'koa-redis'
 
@@ -77,7 +77,7 @@ router.post('/register', async ctx => {
   //  判断用户名是否已经被注册
   if (user.length) {
     ctx.body = {
-      code = -1,
+      code: -1,
       message: '该用户名已被注册'
     }
     return
@@ -88,6 +88,8 @@ router.post('/register', async ctx => {
     password,
     signWay
   })
+  //  调用校验写库状态
+  examDatabase(ctx, nUser)
 })
 
 export default router

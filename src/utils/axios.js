@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message, Notification } from 'element-ui'
+import { Notification } from 'element-ui'
 // import qs from 'qs'
 
 //  创建 axios 实例
@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     const code = response.status
     if (code < 200 || code > 300) {
       console.log(response, 1212)
-      Message.error(response.message)
+      Notification.error(response.message)
       return Promise.reject(response.message)
     } else {
       return response.data

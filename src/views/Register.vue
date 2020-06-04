@@ -163,7 +163,7 @@ export default {
         username: this.userInfo.username,
         email: this.userInfo.email
       }
-      USER.verify(params).then((status, result) => {
+      USER.verify(params).then(({ status, result }) => {
         if (status === 200) {
           if (result.code === 0) {
             this.$notify({ message: result.message, type: 'success' })
@@ -217,11 +217,24 @@ export default {
     handleRegister () {
       this.$refs.ruleForm.validate((valid, object) => {
         if (valid) {
-          let params = {
+          const params = {
             username: this.userInfo.username,
-            
+            signWay: this.register.type === 1 ? this.userInfo.phone : this.userInfo.email,
+            code: this.userInfo.check,
+            password: this.userInfo.pwd
           }
-          USER.register()
+          USER.register(params).then(({ status, result }) => {
+            if (status === 200) {
+              if (result && result.code === 200) {
+                this.$notify({ message: result.message, type: 'success' })
+                location.href = '/signin'
+              } else {
+                this.$notify({ message: result.message, type: 'error' })
+              }
+            } else {
+              this.$notify({ message: '服务器出错', type: 'error' })
+            }
+          })
         } else {
           const validList = this.handleValidObject(object)
           for (let i = 0; i < validList.length; i++) {
