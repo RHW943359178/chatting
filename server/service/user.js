@@ -1,8 +1,10 @@
 import NodeMailer from 'nodemailer'
 import Email from '../database/config'
 import Redis from 'koa-redis'
-import User from '../database/modules/user'
-import axios from '../../src/utils/axios'
+/**
+ * 踩坑记录：在此处引用 axios 是为了校验写库是否成功，但是不能引用已经封装过的 axios，否则会报错 document is not defined
+ */
+import axios from 'axios'
 import qs from 'qs'
 
 //  获取Redis客户端

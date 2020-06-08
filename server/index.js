@@ -21,7 +21,6 @@ async function start () {
     if (err) throw err
     console.log(`服务启动在${port}端口`)
   })
-  
 }
 
 start()

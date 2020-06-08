@@ -53,6 +53,7 @@
 
 <script>
 import util from '../utils/regular'
+import { notify } from '../utils/notification'
 import Background from '../components/public/sign/background.vue'
 import Footer from '../components/public/sign/footer.vue'
 import Header from '../components/public/sign/Header.vue'

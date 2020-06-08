@@ -32,6 +32,8 @@ const init = {
       if (process.env.NODE_ENV !== 'production') {
         mongoose.set('debug', true)
       }
+      //  解决  DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead  警告
+      mongoose.set('useCreateIndex', true)
       //  mongodb连接
       mongoose.connect(config.dbs, {
         useNewUrlParse: true,
