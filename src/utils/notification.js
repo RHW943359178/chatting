@@ -2,8 +2,6 @@ import { Notification } from 'element-ui'
 
 /**
  * 封装 element 的 Notification 组件，避免重复多写多余的代码
- * @param {*} message 
- * @param {*} type 
  */
 export const notify = (message, type) => {
   switch (type) {

@@ -30,7 +30,7 @@ router.post('/verify', async (ctx, next) => {
   sendEmail(ctx)
   // console.log(sendEmail, 'sendEmail')
   ctx.body = {
-    code: 0,
+    code: 200,
     message: '验证码已发送，有效期5分钟'
   }
 })
@@ -40,7 +40,7 @@ router.post('/verify', async (ctx, next) => {
  */
 router.post('/register', async ctx => {
   let { username, signWay, code, password } = ctx.request.body
-
+  console.log(1)
   //  校验验证码
   if (code) {
     const saveCode = await Store.hget(`nodeMail: ${username}`, 'code')
@@ -69,7 +69,7 @@ router.post('/register', async ctx => {
     }
     return false
   }
-
+  console.log(2)
   //  校验用户名和密码
   let user = await User.find({
     username
@@ -82,6 +82,7 @@ router.post('/register', async ctx => {
     }
     return
   }
+  console.log(3)
   //  写入数据库
   let nUser = await User.create({
     username,

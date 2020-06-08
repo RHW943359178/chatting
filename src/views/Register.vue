@@ -164,17 +164,14 @@ export default {
         username: this.userInfo.username,
         email: this.userInfo.email
       }
-      USER.verify(params).then(({ status, result }) => {
-        if (status === 200) {
-          if (result.code === 0) {
-            this.$notify({ message: result.message, type: 'success' })
-          } else if (result.code === -1) {
-            this.$notify({ message: result.message, type: 'warning' })
-          } else {
-            this.$notify({ message: '验证码发送失败', type: 'error' })
-          }
+      USER.verify(params).then(result => {
+        console.log(result, 12)
+        if (result.code === 200) {
+          notify(result.message, 1)
+        } else if (result.code === -1) {
+          notify(result.message, 2)
         } else {
-          this.$notify({ message: '服务器出错', type: 'error' })
+          notify('验证码发送失败', 4)
         }
       })
     },
@@ -224,16 +221,13 @@ export default {
             code: this.userInfo.check,
             password: this.userInfo.pwd
           }
-          USER.register(params).then(({ status, result }) => {
-            if (status === 200) {
-              if (result && result.code === 200) {
-                this.$notify({ message: result.message, type: 'success' })
-                location.href = '/signin'
-              } else {
-                this.$notify({ message: result.message, type: 'error' })
-              }
+          USER.register(params).then(result => {
+            console.log(result, 'result')
+            if (result && result.code === 200) {
+              this.$notify({ message: result.message, type: 'success' })
+              location.href = '/signin'
             } else {
-              this.$notify({ message: '服务器出错', type: 'error' })
+              this.$notify({ message: result.message, type: 'error' })
             }
           })
         } else {

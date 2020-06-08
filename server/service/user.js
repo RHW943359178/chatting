@@ -54,10 +54,11 @@ export const sendEmail = async ctx => {
  */
 export const examDatabase = async (ctx, nUser) => {
   if (nUser) {
-    let result = await axios.post('/api/user/register', qs.stringify({
-      username,
-      password
+    let result = await axios.post('http://127.0.0.1:8082/api/user/register', qs.stringify({
+      username: nUser.username,
+      password: nUser.password
     }))
+    console.log(result, 'result')
     if (result.data && result.data.code === 0) {
       ctx.body = {
         code: 200,
