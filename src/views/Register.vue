@@ -224,10 +224,10 @@ export default {
           USER.register(params).then(result => {
             console.log(result, 'result')
             if (result && result.code === 200) {
-              this.$notify({ message: result.message, type: 'success' })
+              notify(result.message, 1)
               location.href = '/signin'
             } else {
-              this.$notify({ message: result.message, type: 'error' })
+              notify(result.message, 4)
             }
           })
         } else {
