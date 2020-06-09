@@ -18,6 +18,14 @@ const user = {
       method: 'post',
       data: qs.stringify(data)
     })
+  },
+  //  用户登录
+  login (data) {
+    return axios({
+      url: '/api/user/login',
+      method: 'post',
+      data: qs.stringify(data)
+    })
   }
 }
 

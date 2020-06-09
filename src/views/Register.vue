@@ -217,7 +217,7 @@ export default {
         if (valid) {
           const params = {
             username: this.userInfo.username,
-            signWay: this.register.type === 1 ? this.userInfo.phone : this.userInfo.email,
+            mailPhone: this.register.type === 1 ? this.userInfo.phone : this.userInfo.email,
             code: this.userInfo.check,
             password: this.userInfo.pwd
           }
@@ -225,7 +225,7 @@ export default {
             console.log(result, 'result')
             if (result && result.code === 200) {
               notify(result.message, 1)
-              location.href = '/signin'
+              location.href = '#/signin'
             } else {
               notify(result.message, 4)
             }

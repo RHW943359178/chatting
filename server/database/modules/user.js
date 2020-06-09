@@ -11,7 +11,7 @@ const userSchema = new Schema({
     unique: true,
     type: String
   },
-  registerWay: {  //  注册方式：手机注册和邮箱注册两种方式
+  mailPhone: {  //  注册方式：手机注册和邮箱注册两种方式
     unique: true,
     type: String
   },

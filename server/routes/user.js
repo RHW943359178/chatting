@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import { sendEmail, examDatabase } from '../service/user'
 import User from '../database/modules/user'
+// import Passport from '../utils/passport'
 import Redis from 'koa-redis'
 
 //  获取Redis客户端
@@ -39,11 +40,11 @@ router.post('/verify', async (ctx, next) => {
  * 用户注册
  */
 router.post('/register', async ctx => {
-      ctx.body = {
-      code: 200,
-      message: '测试测试试'
-    }
-  // let { username, signWay, code, password } = ctx.request.body
+    ctx.body = {
+    code: 200,
+    message: '测试测试试'
+  }
+  // let { username, mailPhone, code, password } = ctx.request.body
   // console.log(1)
   // //  校验验证码
   // if (code) {
@@ -91,10 +92,18 @@ router.post('/register', async ctx => {
   // let nUser = await User.create({
   //   username,
   //   password,
-  //   signWay
+  //   mailPhone
   // })
   // //  调用校验写库状态
   // examDatabase(ctx, nUser)
+})
+
+/**
+ * 用户登录
+ */
+router.post('/login', async (ctx, next) => {
+  let { mailPhone, password } = ctx.body.request
+  
 })
 
 export default router
