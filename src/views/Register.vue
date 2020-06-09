@@ -53,7 +53,7 @@
 
 <script>
 import util from '../utils/regular'
-import { notify } from '../utils/element'
+import { notify, validObject } from '../utils/element'
 import Background from '../components/public/sign/background.vue'
 import Footer from '../components/public/sign/footer.vue'
 import Header from '../components/public/sign/Header.vue'
@@ -231,7 +231,7 @@ export default {
             }
           })
         } else {
-          const validList = this.handleValidObject(object)
+          const validList = validObject(object)
           for (let i = 0; i < validList.length; i++) {
             const item = validList[i]
             if (item.field === 'phone' || item.field === 'email') {
@@ -258,14 +258,6 @@ export default {
         }
       }
     },
-    //  处理element-ui校验返回的object
-    handleValidObject (object) {
-      const arr = []
-      Object.getOwnPropertyNames(object).forEach(key => {
-        arr.push({ field: key, message: object[key][0].message })
-      })
-      return arr
-    }
   }
 }
 </script>

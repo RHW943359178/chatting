@@ -76,12 +76,15 @@ export default {
   },
   methods: {
     handleLogin () {
+      this.$refs.ruleForm.validate(valid => {
+        
+      })
       let params = {
         mailPhone: this.userInfo.mailPhone,
         password: this.userInfo.password
       }
       USER.login(params).then(result => {
-
+        console.log(result, 'result')
       })
     }
   }

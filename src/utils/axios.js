@@ -4,7 +4,7 @@ import { Notification } from 'element-ui'
 
 //  创建 axios 实例
 const instance = axios.create({
-  baseUrl: `http://${process.env.HOST || 'localhost'} : ${process.env.PORT || 3000}`,
+  baseUrl: `http://${process.env.HOST || '127.0.0.1'} : ${process.env.PORT || 8081}`,
   timeout: 5000,
   headers: {
     // "Content-Type": "application/json;charset=UTF-8"

@@ -28,3 +28,14 @@ export const loading = (message) => {
   })
   return load
 }
+
+/**
+ * 处理 element-ui 校验返回的object
+ */
+export const validObject = object => {
+  const arr = []
+  Object.getOwnPropertyNames(object).forEach(key => {
+    arr.push({ field: key, message: object[key][0].message })
+  })
+  return arr
+}
