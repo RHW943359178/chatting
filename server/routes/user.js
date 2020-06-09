@@ -126,11 +126,4 @@ router.post('/login', async (ctx, next) => {
   }
 })
 
-router.get('/ceshi', ctx => {
-  ctx.body = {
-    code: 200,
-    message: '测试'
-  }
-})
-
 export default router

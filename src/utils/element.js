@@ -19,14 +19,14 @@ export const notify = (message, type) => {
 /**
  * 封装 element 的 Loading 组件，设置全站 loading 效果
  */
-export const loading = (message) => {
-  const load = Loading({
+export const loading = message => {
+  const options = {
     lock: true,
     text: message,
     spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)'
-  })
-  return load
+    background: 'rgba(0, 0, 0, 0.4)'
+  }
+  return Loading.service(options)
 }
 
 /**

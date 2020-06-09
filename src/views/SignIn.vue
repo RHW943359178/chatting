@@ -6,12 +6,12 @@
         <Header :type="signType" />
         <el-row class="m-sign-body">
           <el-form :model="userInfo" ref="ruleForm" :rules="rules">
-            <el-form-item>
-              <el-input v-model="userInfo.mailPhone" placeholder="手机号或邮箱" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
+            <el-form-item prop="mailPhone">
+              <el-input v-model="userInfo.mailPhone" placeholder="手机号或邮箱" @focus="handleFocus('mailPhone')" style="width: 300px" prefix-icon="el-icon-mobile-phone" clearable></el-input>
               <NoticeBox v-if="validate.mailPhone.valid" :message="validate.mailPhone.message" />
             </el-form-item>
-            <el-form-item>
-              <el-input v-model="userInfo.password" placeholder="密码" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
+            <el-form-item prop="password">
+              <el-input v-model="userInfo.password" type="password" placeholder="密码" @focus="handleFocus('password')" style="width: 300px" prefix-icon="el-icon-lock" clearable></el-input>
               <NoticeBox v-if="validate.password.valid" :message="validate.password.message" />
             </el-form-item>
             <el-form-item>
@@ -36,6 +36,7 @@ import Background from '../components/public/sign/background.vue'
 import Footer from '../components/public/sign/footer.vue'
 import Header from '../components/public/sign/Header.vue'
 import NoticeBox from '../components/public/NoticeBox.vue'
+import { notify, validObject, loading } from '../utils/element'
 import USER from '../../server/api/user'
 export default {
   components: {
@@ -53,14 +54,14 @@ export default {
       rememberMe: false,
       //  判断是注册还是登陆，注册是1，登陆是2
       signType: 2,
-      loginForbidden: false,  //  禁止登录标志：默认是 false
-      rules: {  //  登录表格校验规则
+      loginForbidden: false, //  禁止登录标志：默认是 false
+      rules: { //  登录表格校验规则
         mailPhone: [
           { required: true, type: 'string', message: '请输入手机号或邮箱', trigger: 'submit' }
         ],
         password: [
-          { required: true, type: 'string', message: '密码', trigger: 'submit' },
-        ],
+          { required: true, type: 'string', message: '密码', trigger: 'submit' }
+        ]
       },
       validate: {
         mailPhone: {
@@ -70,22 +71,47 @@ export default {
         password: {
           valid: false,
           message: ''
-        },
-      },
+        }
+      }
     }
   },
   methods: {
     handleLogin () {
-      this.$refs.ruleForm.validate(valid => {
-        
+      this.$refs.ruleForm.validate((valid, object) => {
+        if (valid) {
+          const params = {
+            mailPhone: this.userInfo.mailPhone,
+            password: this.userInfo.password
+          }
+          USER.login(params).then(result => {
+            if (result && result.code === 200) {
+              notify(result.message, 1)
+              loading('即将跳转到首页')
+              setTimeout(() => {
+                this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+                  loading().close()
+                })
+                location.href = '/'
+              }, 2000)
+            } else {
+              notify(result.message, 4)
+            }
+          })
+        } else {
+          const validList = validObject(object)
+          for (let i = 0; i < validList.length; i++) {
+            const item = validList[i]
+            this.validate[item.field].valid = true
+            this.validate[item.field].message = item.message
+            break
+          }
+        }
       })
-      let params = {
-        mailPhone: this.userInfo.mailPhone,
-        password: this.userInfo.password
-      }
-      USER.login(params).then(result => {
-        console.log(result, 'result')
-      })
+    },
+    //  input框获取焦点之后取消验证
+    handleFocus (val) {
+      this.$refs.ruleForm.clearValidate(val)
+      this.validate[val].valid = false
     }
   }
 }
